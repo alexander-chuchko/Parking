@@ -1,0 +1,6 @@
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\CoverletSourceRootsMapping
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.csproj.AssemblyReference.cache
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.GeneratedMSBuildEditorConfig.editorconfig
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.AssemblyInfoInputs.cache
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.AssemblyInfo.cs
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.csproj.CoreCompileInputs.cache

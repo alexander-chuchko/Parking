@@ -15,6 +15,7 @@
 
 using System;
 
+
 namespace CoolParking.BL.Models
 {
     public class Vehicle 
@@ -38,6 +39,11 @@ namespace CoolParking.BL.Models
         private bool IsValidId(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public static string GenerateRandomRegistrationPlateNumber()
+        {
+            return string.Empty;
         }
     }
 }

@@ -17,7 +17,7 @@
 
 using CoolParking.BL.Interfaces;
 
-namespace CoolParking.BL.Models
+namespace CoolParking.BL.Services
 {
     public class ParkingService : IParkingService
     {
