@@ -21,5 +21,15 @@ namespace CoolParking.BL.Models
         public Parking()
         {
         }
+
+        public static Parking GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Parking();
+            }
+
+            return instance;
+        }
     }
 }
