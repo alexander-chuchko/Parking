@@ -34,7 +34,15 @@ namespace CoolParking.BL.Models
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+        }
+
+        public void DisposeInstance()
+        {
+            if (instance != null)
+            {
+                instance.Dispose();
+                instance = null;
+            }
         }
     }
 }
