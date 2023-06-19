@@ -14,7 +14,8 @@
 // Статический метод GenerateRandomRegistrationPlateNumber должен возвращать случайно сгенерированный уникальный идентификатор.
 
 using System;
-
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CoolParking.BL.Models
 {
@@ -38,12 +39,28 @@ namespace CoolParking.BL.Models
 
         private bool IsValidId(string id)
         {
-            throw new NotImplementedException();
+            return new Regex(@"^[A-Z]{2}-[0-9]{4}-[A-Z]{2}$").IsMatch(id);
         }
 
-        public static string GenerateRandomRegistrationPlateNumber()
+        private static string GenerateRandomRegistrationPlateNumber()
         {
-            return string.Empty;
+            //Example ХХ-YYYY-XX
+            Random random = new Random();
+            StringBuilder stringBuilder = new StringBuilder();
+            GetTwoLetters(stringBuilder, random);
+            stringBuilder.Append('-').Append(random.Next(1000, 10000)).Append('-');
+            GetTwoLetters(stringBuilder, random);
+
+            return stringBuilder.ToString();
+
+        }
+
+        private static void GetTwoLetters(StringBuilder stringBuilder, Random random)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                stringBuilder.Append((char)random.Next('A', 'Z' + 1));
+            }
         }
     }
 }
