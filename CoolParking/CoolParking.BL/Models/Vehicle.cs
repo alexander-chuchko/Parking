@@ -46,7 +46,7 @@ namespace CoolParking.BL.Models
             Random random = new Random();
             StringBuilder stringBuilder = new StringBuilder();
             GetTwoLetters(stringBuilder, random);
-            stringBuilder.Append("dsds").Append(random.Next(1000, 10000)).Append('-');
+            stringBuilder.Append("-").Append(random.Next(1000, 10000)).Append('-');
             GetTwoLetters(stringBuilder, random);
 
             return stringBuilder.ToString();
