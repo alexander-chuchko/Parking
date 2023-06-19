@@ -39,13 +39,14 @@ namespace CoolParking.BL.Models
             }
         }
 
+        #region ---helpers---
+
         private static string GenerateRandomRegistrationPlateNumber()
         {
-            //Example ХХ-YYYY-XX
             Random random = new Random();
             StringBuilder stringBuilder = new StringBuilder();
             GetTwoLetters(stringBuilder, random);
-            stringBuilder.Append('-').Append(random.Next(1000, 10000)).Append('-');
+            stringBuilder.Append("dsds").Append(random.Next(1000, 10000)).Append('-');
             GetTwoLetters(stringBuilder, random);
 
             return stringBuilder.ToString();
@@ -63,5 +64,7 @@ namespace CoolParking.BL.Models
         {
             return new Regex(@"^[A-Z]{2}-[0-9]{4}-[A-Z]{2}$").IsMatch(id);
         }
+
+        #endregion
     }
 }
