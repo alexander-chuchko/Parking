@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TmqkUgRtzeaD+Tg52Mlc2VKOm5JqeJeI5C9wlMr3rYfD/9O3agOXF2ujyJprwh/2pOn7QRm11eB1fm7+yLFZ6g==",
+  "dgSpecHash": "KxOsLvJ/bS6vMall2xh46lupxVxjTJKQHNvED3wsaMX9p7cWXjSWEXgrWR5SH5V7LevRSpvygGjVaeErd7sG7g==",
   "success": true,
-  "projectFilePath": "E:\\Library\\AcademyBinary\\AcademiBinary 2023\\Projects\\CoolParcking\\example\\bsa-dotnet-hw2-template-main\\CoolParking\\CoolParking.BL\\CoolParking.BL.csproj",
+  "projectFilePath": "E:\\Library\\AcademyBinary\\AcademiBinary 2023\\Projects\\CoolParcking\\cool-parking\\CoolParking\\CoolParking.BL\\CoolParking.BL.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rv+jt9TpmlABiOAJXTbbGmedNkfsvBqJ/2zgdjlxh0gnKUGN9wJ/NRgbjivB0G6fsj7j/2U13vC5odsn+6V3dQ==",
+  "dgSpecHash": "4R+taLIhpEhKx6fbilU7e9Se08ZruXEDQptfB23cvbTn6Kl1bHvLx7aDOEPuUqKp7jn5H+XbHyU5bjc3wh92SQ==",
   "success": true,
-  "projectFilePath": "E:\\Library\\AcademyBinary\\AcademiBinary 2023\\Projects\\CoolParcking\\example\\bsa-dotnet-hw2-template-main\\CoolParking\\CoolParking.BL.Tests\\CoolParking.BL.Tests.csproj",
+  "projectFilePath": "E:\\Library\\AcademyBinary\\AcademiBinary 2023\\Projects\\CoolParcking\\cool-parking\\CoolParking\\CoolParking.BL.Tests\\CoolParking.BL.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\chuch\\.nuget\\packages\\castle.core\\4.3.1\\castle.core.4.3.1.nupkg.sha512",
     "C:\\Users\\chuch\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
