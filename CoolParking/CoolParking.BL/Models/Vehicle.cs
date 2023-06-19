@@ -13,6 +13,8 @@
 // Тип конструктора показывается в тестах и конструктор должен иметь валидацию, что тоже видно из тестов.
 // Статический метод GenerateRandomRegistrationPlateNumber должен возвращать случайно сгенерированный уникальный идентификатор.
 
+using System;
+
 namespace CoolParking.BL.Models
 {
     public class Vehicle 
@@ -20,6 +22,22 @@ namespace CoolParking.BL.Models
         public string Id { get; }
         public VehicleType VehicleType { get; }
         public decimal Balance { get; internal set; }
-    }
 
+        public Vehicle(string id, VehicleType vehicleType, decimal balance)
+        {
+            if (true)
+            {
+
+            }
+            else
+            {
+                throw new ArgumentException("Invalid identifier entered");
+            }
+        }
+
+        private bool IsValidId(string id)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
