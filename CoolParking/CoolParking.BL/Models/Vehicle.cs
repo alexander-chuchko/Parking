@@ -27,19 +27,16 @@ namespace CoolParking.BL.Models
 
         public Vehicle(string id, VehicleType vehicleType, decimal balance)
         {
-            if (true)
+            if (IsValidId(id) && balance >= Settings.tariffs[(int)vehicleType])
             {
-
+                this.Id = id;
+                this.VehicleType = vehicleType; 
+                this.Balance = balance;  
             }
             else
             {
                 throw new ArgumentException("Invalid identifier entered");
             }
-        }
-
-        private bool IsValidId(string id)
-        {
-            return new Regex(@"^[A-Z]{2}-[0-9]{4}-[A-Z]{2}$").IsMatch(id);
         }
 
         private static string GenerateRandomRegistrationPlateNumber()
@@ -52,7 +49,6 @@ namespace CoolParking.BL.Models
             GetTwoLetters(stringBuilder, random);
 
             return stringBuilder.ToString();
-
         }
 
         private static void GetTwoLetters(StringBuilder stringBuilder, Random random)
@@ -61,6 +57,11 @@ namespace CoolParking.BL.Models
             {
                 stringBuilder.Append((char)random.Next('A', 'Z' + 1));
             }
+        }
+
+        private bool IsValidId(string id)
+        {
+            return new Regex(@"^[A-Z]{2}-[0-9]{4}-[A-Z]{2}$").IsMatch(id);
         }
     }
 }
