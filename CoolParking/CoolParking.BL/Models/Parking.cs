@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace CoolParking.BL.Models
 {
-    public class Parking
+    public class Parking : IDisposable
     {
         public List<Vehicle> Vehicles { get; set; }
         public decimal Balance { get; set; }
@@ -30,6 +30,11 @@ namespace CoolParking.BL.Models
             }
 
             return instance;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
