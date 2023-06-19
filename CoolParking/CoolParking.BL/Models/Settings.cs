@@ -2,6 +2,7 @@
 //       Implementation details are up to you, they just have to meet the requirements of the home task.
 // TODO: реалізувати налаштування класу.
 // Деталі реалізації залежать від вас, вони лише мають відповідати вимогам домашнього завдання.
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -17,5 +18,13 @@ namespace CoolParking.BL.Models
         public static int coefficient = 1000;
         public static decimal penaltyCoefficient = 2.5m;
 
+        //A dictionary with tariff coefficients has been created
+        public static Dictionary<int, decimal> tariffs = new Dictionary<int, decimal>()
+        {
+            [(int)VehicleType.PassengerCar] = 2m,
+            [(int)VehicleType.Truck] = 5m,
+            [(int)VehicleType.Bus] = 3.5m,
+            [(int)VehicleType.Motorcycle] = 1m
+        };
     }
 }
