@@ -46,6 +46,13 @@ namespace CoolParking.BL.Services
             set { _parking = value; }
         }
 
+        private TransactionInfo[] _transactionInfos;
+        public TransactionInfo[] TransactionInfos
+        {
+            get { return _transactionInfos; }
+            set { _transactionInfos = value; }
+        }
+
         #region  ---  Interface IParkingService implementation   ---
         //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
@@ -114,6 +121,7 @@ namespace CoolParking.BL.Services
             }
         }
 
+        //Method for top up vehicle
         public void TopUpVehicle(string vehicleId, decimal sum)
         {
             var foundVehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId);
