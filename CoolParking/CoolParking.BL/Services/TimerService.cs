@@ -41,7 +41,6 @@ namespace CoolParking.BL.Services
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
         }
 
         public void FireElapsedEvent(object sender, ElapsedEventArgs e)

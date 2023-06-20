@@ -4,6 +4,7 @@
 //       Other validation rules and constructor format went from tests.
 //       Other implementation details are up to you, they just have to match the interface requirements
 //       and tests, for example, in ParkingServiceTests you can find the necessary constructor format and validation rules.
+
 /*
  // TODO: реализовать класс ParkingService из интерфейса IParkingService.
 // При попытке добавить машину на полную парковку должно быть выброшено исключение InvalidOperationException.
@@ -11,8 +12,6 @@
 // Другие правила проверки и формат конструктора пошли из тестов.
 // Другие детали реализации на ваше усмотрение, они просто должны соответствовать требованиям интерфейса
 // и тесты, например, в ParkingServiceTests можно найти нужный формат конструктора и правила проверки.
- 
- 
  */
 
 using CoolParking.BL.Interfaces;
@@ -54,6 +53,7 @@ namespace CoolParking.BL.Services
         }
 
         #region  ---  Interface IParkingService implementation   ---
+
         //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
         {
