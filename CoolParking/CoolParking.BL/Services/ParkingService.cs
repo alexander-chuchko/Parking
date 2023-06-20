@@ -46,11 +46,11 @@ namespace CoolParking.BL.Services
             set { _parking = value; }
         }
 
-        private TransactionInfo[] _transactionInfos;
-        public TransactionInfo[] TransactionInfos
+        private TransactionInfo[] _transactionInfo;
+        public TransactionInfo[] TransactionInfo
         {
-            get { return _transactionInfos; }
-            set { _transactionInfos = value; }
+            get { return _transactionInfo; }
+            set { _transactionInfo = value; }
         }
 
         #region  ---  Interface IParkingService implementation   ---
@@ -69,7 +69,7 @@ namespace CoolParking.BL.Services
 
         public void Dispose()
         {
-            throw new System.NotImplementedException();
+            Parking.DisposeInstance();
         }
 
         //Method for geting balance of parking
@@ -92,7 +92,7 @@ namespace CoolParking.BL.Services
 
         public TransactionInfo[] GetLastParkingTransactions()
         {
-            throw new System.NotImplementedException();
+            return TransactionInfo;
         }
 
         //Method for geting all vehicles of parking
@@ -103,7 +103,7 @@ namespace CoolParking.BL.Services
 
         public string ReadFromLog()
         {
-            throw new System.NotImplementedException();
+            return _logService.Read();
         }
 
         //Pick up car from parking
