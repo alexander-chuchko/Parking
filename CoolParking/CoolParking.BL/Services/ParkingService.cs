@@ -19,6 +19,7 @@ using CoolParking.BL.Interfaces;
 using CoolParking.BL.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CoolParking.BL.Services
 {
@@ -64,19 +65,19 @@ namespace CoolParking.BL.Services
             throw new System.NotImplementedException();
         }
 
-        //Method for get balance of parking
+        //Method for geting balance of parking
         public decimal GetBalance()
         {
             return Parking.Balance;
         }
 
-        //Method for get capacity of parking
+        //Method for geting capacity of parking
         public int GetCapacity()
         {
             return Parking.Vehicles.Capacity;
         }
 
-        //Method for get free places of parking
+        //Method for geting free places of parking
         public int GetFreePlaces()
         {
             return Parking.Vehicles.Capacity - Parking.Vehicles.Count;
@@ -87,9 +88,10 @@ namespace CoolParking.BL.Services
             throw new System.NotImplementedException();
         }
 
-        public System.Collections.ObjectModel.ReadOnlyCollection<Vehicle> GetVehicles()
+        //Method for geting all vehicles of parking
+        public ReadOnlyCollection<Vehicle> GetVehicles()
         {
-            throw new System.NotImplementedException();
+            return Parking.Vehicles.AsReadOnly();
         }
 
         public string ReadFromLog()
