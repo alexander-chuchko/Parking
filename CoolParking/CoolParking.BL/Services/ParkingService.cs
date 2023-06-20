@@ -39,9 +39,17 @@ namespace CoolParking.BL.Services
             set { _parking = value; }
         }
 
+        //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
         {
-            throw new System.NotImplementedException();
+            if (Parking.Vehicles.Count < Settings.parkingCapacity)
+            {
+                Parking.Vehicles.Add(vehicle);  
+            }
+            else 
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         public void Dispose()
