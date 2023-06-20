@@ -76,9 +76,10 @@ namespace CoolParking.BL.Services
             return Parking.Vehicles.Capacity;
         }
 
+        //Method for get free places of parking
         public int GetFreePlaces()
         {
-            throw new System.NotImplementedException();
+            return Parking.Vehicles.Capacity - Parking.Vehicles.Count;
         }
 
         public TransactionInfo[] GetLastParkingTransactions()
