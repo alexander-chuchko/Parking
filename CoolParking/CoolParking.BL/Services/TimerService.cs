@@ -29,7 +29,9 @@ namespace CoolParking.BL.Services
 
         public void Start()
         {
-            throw new System.NotImplementedException();
+            timer.Elapsed += FireElapsedEvent;
+            timer.AutoReset = true;
+            timer.Start();
         }
 
         public void Stop()
