@@ -5,24 +5,27 @@
 // Служба должна быть просто оболочкой для системных таймеров.
 
 using CoolParking.BL.Interfaces;
+using System.Threading;
 using System.Timers;
 
 namespace CoolParking.BL.Services
 {
     public class TimerService : ITimerService
     {
+        private System.Timers.Timer timer;
+        public TimerService()
+        {
+            timer = new System.Timers.Timer();
+        }
+
+        #region  ---  Interface ITimerService implementation   ---
         public double Interval 
-        { 
-            get => throw new System.NotImplementedException(); 
-            set => throw new System.NotImplementedException(); 
+        {
+            get { return timer.Interval; }
+            set { timer.Interval = value; } 
         }
 
         public event ElapsedEventHandler Elapsed;
-
-        public void Dispose()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void Start()
         {
@@ -33,5 +36,12 @@ namespace CoolParking.BL.Services
         {
             throw new System.NotImplementedException();
         }
+
+        public void Dispose()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion
     }
 }
