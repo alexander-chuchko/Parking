@@ -34,12 +34,20 @@ namespace CoolParking.BL.Services
 
         public void Stop()
         {
-            throw new System.NotImplementedException();
+            timer.Stop();
         }
 
         public void Dispose()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void FireElapsedEvent(object sender, ElapsedEventArgs e)
+        {
+            if (Elapsed != null)
+            {
+                Elapsed?.Invoke(this, null);
+            }
         }
 
         #endregion
