@@ -9,13 +9,18 @@
 // і тести, наприклад, в LogServiceTests можна знайти необхідний формат конструктора.
 
 using CoolParking.BL.Interfaces;
+using System.IO;
 
 namespace CoolParking.BL.Services
 {
     public class LogService : ILogService
     {
         private string _logPath;
-        public string LogPath => _logPath;
+        public string LogPath
+        {
+            get { return _logPath; }
+        }
+
         public LogService(string logPath)
         {
             _logPath = logPath;
@@ -23,12 +28,32 @@ namespace CoolParking.BL.Services
 
         public string Read()
         {
-            throw new System.NotImplementedException();
+            string readTransactions = null;
+
+            if (IsExistFile(LogPath))
+            {
+                using (var file = new StreamReader(LogPath))
+                {
+                    readTransactions = file.ReadToEnd();
+                }
+            }
+
+            return readTransactions;
         }
 
         public void Write(string logInfo)
         {
-            throw new System.NotImplementedException();
+            
+        }
+
+        private bool IsExistFile(string logPath)
+        {
+            if (!File.Exists(logPath))
+            {
+                throw new System.InvalidOperationException();
+            }
+
+            return true;
         }
     }
 }
