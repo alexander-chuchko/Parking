@@ -25,6 +25,9 @@ namespace CoolParking.BL.Services
     public class ParkingService : IParkingService
     {
         private readonly IParkingService _parkingService;
+        private readonly TimerService _withdrawTimer;
+        private readonly TimerService _logTimer;
+        readonly ILogService _logService;
 
         public ParkingService()
         {
