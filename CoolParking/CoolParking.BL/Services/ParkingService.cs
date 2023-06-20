@@ -116,7 +116,16 @@ namespace CoolParking.BL.Services
 
         public void TopUpVehicle(string vehicleId, decimal sum)
         {
-            throw new System.NotImplementedException();
+            var foundVehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId);
+
+            if (foundVehicle != null && sum >= 0)
+            {
+                foundVehicle.Balance += sum;
+            }
+            else 
+            {
+                throw new ArgumentException();
+            }
         }
 
         #endregion
