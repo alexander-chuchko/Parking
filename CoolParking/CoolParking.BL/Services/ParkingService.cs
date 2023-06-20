@@ -25,14 +25,17 @@ namespace CoolParking.BL.Services
     public class ParkingService : IParkingService
     {
         private readonly IParkingService _parkingService;
-        private readonly TimerService _withdrawTimer;
-        private readonly TimerService _logTimer;
-        readonly ILogService _logService;
+        private readonly ITimerService _withdrawTimer;
+        private readonly ITimerService _logTimer;
+        private readonly ILogService _logService;
 
-        public ParkingService()
+        public ParkingService(ITimerService withdrawTimer, ITimerService logTimer, ILogService logService)
         {
             Parking = Parking.GetInstance();
             Parking.Vehicles = new List<Vehicle>(Settings.parkingCapacity);
+            _logService = logService;
+            _logTimer = logTimer;
+            _withdrawTimer = withdrawTimer;
         }
 
         private Parking _parking;
@@ -42,6 +45,7 @@ namespace CoolParking.BL.Services
             set { _parking = value; }
         }
 
+        #region  ---  Interface IParkingService implementation   ---
         //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
         {
@@ -60,14 +64,16 @@ namespace CoolParking.BL.Services
             throw new System.NotImplementedException();
         }
 
+        //Method for get balance of parking
         public decimal GetBalance()
         {
-            throw new System.NotImplementedException();
+            return Parking.Balance;
         }
 
+        //Method for get capacity of parking
         public int GetCapacity()
         {
-            throw new System.NotImplementedException();
+            return Parking.Vehicles.Capacity;
         }
 
         public int GetFreePlaces()
@@ -109,5 +115,7 @@ namespace CoolParking.BL.Services
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
     }
 }
