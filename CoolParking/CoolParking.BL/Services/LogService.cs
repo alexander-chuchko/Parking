@@ -15,15 +15,17 @@ namespace CoolParking.BL.Services
 {
     public class LogService : ILogService
     {
+        public LogService(string logPath)
+        {
+            _logPath = logPath;
+        }
+
+        #region  ---  Interface ILogService implementation   ---
+
         private string _logPath;
         public string LogPath
         {
             get { return _logPath; }
-        }
-
-        public LogService(string logPath)
-        {
-            _logPath = logPath;
         }
 
         public string Read()
@@ -43,8 +45,20 @@ namespace CoolParking.BL.Services
 
         public void Write(string logInfo)
         {
-            
+            if (!string.IsNullOrEmpty(LogPath) && !string.IsNullOrEmpty(logInfo))
+            {
+                string formattedString = $"{logInfo}\n";
+
+                using (StreamWriter write = new StreamWriter(LogPath, File.Exists(LogPath)))
+                {
+                    write.Write(formattedString);
+                }
+            }
         }
+
+        #endregion
+
+        #region ---Helpers---
 
         private bool IsExistFile(string logPath)
         {
@@ -55,5 +69,7 @@ namespace CoolParking.BL.Services
 
             return true;
         }
+
+        #endregion
     }
 }

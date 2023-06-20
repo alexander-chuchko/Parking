@@ -16,11 +16,29 @@
  */
 
 using CoolParking.BL.Interfaces;
+using CoolParking.BL.Models;
+using System;
+using System.Collections.Generic;
 
 namespace CoolParking.BL.Services
 {
     public class ParkingService : IParkingService
     {
+        private readonly IParkingService _parkingService;
+
+        public ParkingService()
+        {
+            Parking = Parking.GetInstance();
+            Parking.Vehicles = new List<Vehicle>(Settings.parkingCapacity);
+        }
+
+        private Parking _parking;
+        public Parking Parking
+        {
+            get { return _parking; }
+            set { _parking = value; }
+        }
+
         public void AddVehicle(Vehicle vehicle)
         {
             throw new System.NotImplementedException();
@@ -61,9 +79,19 @@ namespace CoolParking.BL.Services
             throw new System.NotImplementedException();
         }
 
+        //Pick up car from parking
         public void RemoveVehicle(string vehicleId)
         {
-            throw new System.NotImplementedException();
+            var foundVehicle = Parking.Vehicles.Find(tr=>tr.Id == vehicleId && tr.Balance >= 0);
+
+            if (foundVehicle != null)
+            {
+                Parking.Vehicles.Remove(foundVehicle);  
+            }
+            else 
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         public void TopUpVehicle(string vehicleId, decimal sum)
