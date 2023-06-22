@@ -24,6 +24,19 @@ namespace CoolParking.BL
             Console.WriteLine($"\tParking balance: {_parkingService.GetBalance()}");
         }
 
+        private void DisplayEarnings()
+        {
+            var transactionsLog = _parkingService.GetLastParkingTransactions();
+
+            if (transactionsLog != null)
+            {
+                Console.WriteLine($"\tAmount for the current period: {transactionsLog.Sum(tr => tr.Sum)}");
+            }
+            else
+            {
+                Console.WriteLine($"\tAmount for the current period: 0");
+            }
+        }
 
 
         #endregion
