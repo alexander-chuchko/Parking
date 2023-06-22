@@ -19,6 +19,7 @@ using CoolParking.BL.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Timers;
 
@@ -154,6 +155,47 @@ namespace CoolParking.BL.Services
 
         private void OnWithdrawFunds(object sender, ElapsedEventArgs e)
         {
+            if (Parking.Vehicles.Count != 0)
+            {
+                int count = 0;
+
+                //When the first object is added
+                if (TransactionInfo == null)
+                {
+                    TransactionInfo = new TransactionInfo[Parking.Vehicles.Count];
+                }
+                else
+                {
+                    ResizeArray(TransactionInfo.Length + Parking.Vehicles.Count);
+                    count = TransactionInfo.Length - Parking.Vehicles.Count;
+                }
+
+                foreach (var vehicles in Parking.Vehicles)
+                {
+                    decimal sumFine = 0;
+                    decimal tariff = Settings.tariffs[(int)vehicles.VehicleType];
+
+                    if (vehicles.Balance < 0)
+                    {
+                        sumFine = tariff * Settings.penaltyCoefficient;
+                    }
+                    else if (vehicles.Balance < tariff)
+                    {
+                        sumFine = vehicles.Balance + ((tariff - vehicles.Balance) * Settings.penaltyCoefficient);
+                    }
+                    else if (vehicles.Balance >= tariff)
+                    {
+                        sumFine = tariff;
+                    }
+
+                    vehicles.Balance -= sumFine;
+                    Parking.Balance += sumFine;
+
+                    TransactionInfo[count] = CreateTransactionInfo(vehicles, sumFine);
+
+                    count++;
+                }
+            }
         }
     }
 }
