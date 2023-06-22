@@ -207,5 +207,14 @@ namespace CoolParking.BL.Services
                 Sum = sumFine
             };
         }
+
+        private void ResizeArray(int size)
+        {
+            TransactionInfo[] newArray = new TransactionInfo[size];
+
+            Array.Copy(TransactionInfo, newArray, Math.Min(size, TransactionInfo.Length));
+
+            TransactionInfo = newArray;
+        }
     }
 }
