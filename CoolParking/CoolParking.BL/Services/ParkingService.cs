@@ -71,6 +71,7 @@ namespace CoolParking.BL.Services
             if (vehicle.Balance >= Settings.tariffs[(int)vehicle.VehicleType])
             {
                 Parking.Vehicles.Add(vehicle);
+                StartOrStopTimer(Parking.Vehicles);
             }
         }
 

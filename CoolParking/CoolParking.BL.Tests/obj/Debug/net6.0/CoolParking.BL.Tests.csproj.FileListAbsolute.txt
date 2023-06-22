@@ -5,6 +5,9 @@ E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\C
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.AssemblyInfo.cs
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\obj\Debug\net6.0\CoolParking.BL.Tests.csproj.CoreCompileInputs.cache
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\testhost.dll
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\CoolParking.BL.deps.json
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\CoolParking.BL.runtimeconfig.json
+E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\CoolParking.BL.exe
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\Microsoft.VisualStudio.TestPlatform.Extension.Xunit.Xml.TestLogger.dll
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\Microsoft.VisualStudio.TestPlatform.Extension.Xunit.Xml.TestAdapter.dll
 E:\Library\AcademyBinary\AcademiBinary 2023\Projects\CoolParcking\cool-parking\CoolParking\CoolParking.BL.Tests\bin\Debug\net6.0\Spekt.TestLogger.dll
