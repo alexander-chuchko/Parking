@@ -45,11 +45,11 @@ namespace CoolParking.BL.Services
 
         public void Write(string logInfo)
         {
-            if (!string.IsNullOrEmpty(LogPath) && !string.IsNullOrEmpty(logInfo))
+            if (!string.IsNullOrEmpty(_logPath) && !string.IsNullOrEmpty(logInfo))
             {
-                string formattedString = $"{logInfo}\n";
+                string formattedString = string.Concat(logInfo, "\n");
 
-                using (StreamWriter write = new StreamWriter(LogPath, File.Exists(LogPath)))
+                using (StreamWriter write = new StreamWriter(_logPath, File.Exists(_logPath)))
                 {
                     write.Write(formattedString);
                 }

@@ -41,7 +41,7 @@ namespace CoolParking.BL.Models
 
         #region ---helpers---
 
-        private static string GenerateRandomRegistrationPlateNumber()
+        public static string GenerateRandomRegistrationPlateNumber()
         {
             Random random = new Random();
             StringBuilder stringBuilder = new StringBuilder();

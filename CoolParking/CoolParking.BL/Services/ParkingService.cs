@@ -4,22 +4,18 @@
 //       Other validation rules and constructor format went from tests.
 //       Other implementation details are up to you, they just have to match the interface requirements
 //       and tests, for example, in ParkingServiceTests you can find the necessary constructor format and validation rules.
-
-/*
- // TODO: реализовать класс ParkingService из интерфейса IParkingService.
+// TODO: реализовать класс ParkingService из интерфейса IParkingService.
 // При попытке добавить машину на полную парковку должно быть выброшено исключение InvalidOperationException.
 // При попытке удаления автомобиля с отрицательным балансом (долгом) должно быть выброшено InvalidOperationException.
 // Другие правила проверки и формат конструктора пошли из тестов.
 // Другие детали реализации на ваше усмотрение, они просто должны соответствовать требованиям интерфейса
 // и тесты, например, в ParkingServiceTests можно найти нужный формат конструктора и правила проверки.
- */
 
 using CoolParking.BL.Interfaces;
 using CoolParking.BL.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 using System.Timers;
 
@@ -27,7 +23,6 @@ namespace CoolParking.BL.Services
 {
     public class ParkingService : IParkingService
     {
-        private readonly IParkingService _parkingService;
         private readonly ITimerService _withdrawTimer;
         private readonly ITimerService _logTimer;
         private readonly ILogService _logService;
@@ -121,15 +116,24 @@ namespace CoolParking.BL.Services
         //Pick up car from parking
         public void RemoveVehicle(string vehicleId)
         {
-            var foundVehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId && tr.Balance >= 0);
+            var vehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId);
 
-            if (foundVehicle != null)
+            if (vehicle != null)
             {
-                Parking.Vehicles.Remove(foundVehicle);
+                if (vehicle.Balance < Settings.initialBalanceParking)
+                {
+                    throw new InvalidOperationException("Your balance is negative");
+                }
+                else
+                {
+                    Parking.Vehicles.Remove(vehicle);
+
+                    StartOrStopTimer(Parking.Vehicles);
+                }
             }
             else
             {
-                throw new InvalidOperationException();
+                throw new ArgumentException("This number does not exist");
             }
         }
 
@@ -151,9 +155,19 @@ namespace CoolParking.BL.Services
         #endregion
 
         private void OnLogRecord(object sender, ElapsedEventArgs e)
-        {
-            string transactions = string.Join("\r", TransactionInfo?.Where(transaction => transaction != null)
-                .Select(transaction => $"Id:{transaction.VehicleId} Date:{transaction.TransactionTime} Sum:{transaction.Sum}"));
+        {  
+            string transactions = string.Empty;
+
+            if (TransactionInfo != null)
+            {
+                foreach (var transaction in TransactionInfo)
+                {
+                    if (transaction != null)
+                    {
+                        transactions += $"Id:{transaction.VehicleId} Date:{transaction.TransactionTime} Sum:{transaction.Sum}\r";
+                    }
+                }
+            }
 
             _logService.Write(transactions);
 
