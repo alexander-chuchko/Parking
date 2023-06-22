@@ -19,6 +19,7 @@ using CoolParking.BL.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Timers;
 
 namespace CoolParking.BL.Services
 {
@@ -36,6 +37,7 @@ namespace CoolParking.BL.Services
             _logService = logService;
             _logTimer = logTimer;
             _withdrawTimer = withdrawTimer;
+
         }
 
         private Parking _parking;
@@ -137,5 +139,25 @@ namespace CoolParking.BL.Services
         }
 
         #endregion
+
+        private void OnLog_Record(object sender, ElapsedEventArgs e)
+        {
+            string transactions = string.Empty;
+
+            if (TransactionInfo != null)
+            {
+                foreach (var transaction in TransactionInfo)
+                {
+                    if (transaction != null)
+                    {
+                        transactions += $"Id:{transaction.VehicleId} Date:{transaction.TransactionTime} Sum:{transaction.Sum}\r";
+                    }
+                }
+            }
+
+            _logService.Write(transactions);
+
+            //TransactionInfo = null;
+        }
     }
 }
