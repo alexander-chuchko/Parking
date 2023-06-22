@@ -38,6 +38,7 @@ namespace CoolParking.BL.Services
             _logService = logService;
             _logTimer = logTimer;
             _withdrawTimer = withdrawTimer;
+            this._logTimer.Elapsed += OnLogRecord;
 
         }
 
@@ -62,9 +63,9 @@ namespace CoolParking.BL.Services
         {
             if (Parking.Vehicles.Count < Settings.parkingCapacity)
             {
-                Parking.Vehicles.Add(vehicle);  
+                Parking.Vehicles.Add(vehicle);
             }
-            else 
+            else
             {
                 throw new InvalidOperationException();
             }
@@ -112,13 +113,13 @@ namespace CoolParking.BL.Services
         //Pick up car from parking
         public void RemoveVehicle(string vehicleId)
         {
-            var foundVehicle = Parking.Vehicles.Find(tr=>tr.Id == vehicleId && tr.Balance >= 0);
+            var foundVehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId && tr.Balance >= 0);
 
             if (foundVehicle != null)
             {
-                Parking.Vehicles.Remove(foundVehicle);  
+                Parking.Vehicles.Remove(foundVehicle);
             }
-            else 
+            else
             {
                 throw new InvalidOperationException();
             }
@@ -133,7 +134,7 @@ namespace CoolParking.BL.Services
             {
                 foundVehicle.Balance += sum;
             }
-            else 
+            else
             {
                 throw new ArgumentException();
             }
@@ -149,6 +150,10 @@ namespace CoolParking.BL.Services
             _logService.Write(transactions);
 
             TransactionInfo = null;
+        }
+
+        private void OnWithdrawFunds(object sender, ElapsedEventArgs e)
+        {
         }
     }
 }
