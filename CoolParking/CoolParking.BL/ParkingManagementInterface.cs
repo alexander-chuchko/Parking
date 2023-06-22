@@ -66,12 +66,40 @@ namespace CoolParking.BL
             }
         }
         //DisplayAllParkingTrCurrentPeriod
+        //Вивести на екран усі Транзакції Паркінгу за поточний період (до запису у лог);
 
-        private void PutTrAidForParking()
+
+
+        //Поповнити баланс конкретного Тр. засобу.
+        private void TopUpBalanceCar()
         {
-            var vehicle = new Vehicle(Vehicle.GenerateRandomRegistrationPlateNumber(), VehicleType.Truck, 100);
-            _parkingService.AddVehicle(vehicle);
-            Console.WriteLine($"\tAdded to the parking car - Id:{vehicle.Id} VehicleType:{vehicle.VehicleType} Balance:{vehicle.Balance}");
+            Console.WriteLine("\tSpecify the index of the vehicle");
+            ShowListTrFundsLocated();
+            string? id = Console.ReadLine();
+            Console.WriteLine("\tEnter replenishment amount");
+            string? topUpAmount = Console.ReadLine();
+            var vehicles = _parkingService.GetVehicles();
+
+            if (IsValidInput(id, topUpAmount, vehicles.Count, out int convertIndex, out int convertTopUpAmount))
+            {
+                _parkingService.TopUpVehicle(vehicles[convertIndex - 1].Id, convertTopUpAmount);
+            }
+        }
+
+        private bool IsValidInput(string? id, string? topUpAmount, int maxIndex, out int convertIndex, out int convertTopUpAmount)
+        {
+            convertIndex = 0;
+            convertTopUpAmount = 0;
+
+            if (id != null && int.TryParse(id, out convertIndex) && int.TryParse(topUpAmount, out convertTopUpAmount) && convertIndex > 0 && convertIndex <= maxIndex)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("\tInvalid input. Please enter valid indices and amounts.");
+                return false;
+            }
         }
 
         #endregion
