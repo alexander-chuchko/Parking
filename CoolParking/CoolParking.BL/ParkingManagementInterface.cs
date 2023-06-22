@@ -17,6 +17,15 @@ namespace CoolParking.BL
             this._parkingService = parkingService;
         }
 
-       
+        #region ---helpers---
+
+        private void DisplayCurrentBalance()
+        {
+            Console.WriteLine($"\tParking balance: {_parkingService.GetBalance()}");
+        }
+
+
+
+        #endregion
     }
 }
