@@ -62,13 +62,19 @@ namespace CoolParking.BL.Services
         //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
         {
-            if (Parking.Vehicles.Count < Settings.parkingCapacity)
+            if (Parking.Vehicles.Count == Settings.parkingCapacity)
+            {
+                throw new InvalidOperationException("There are no spaces in the parking lot");
+            }
+
+            if (Parking.Vehicles.Count != 0 && Parking.Vehicles.Exists(v => v.Id == vehicle.Id))
+            {
+                throw new ArgumentException("Invalid identifier entered");
+            }
+
+            if (vehicle.Balance >= Settings.tariffs[(int)vehicle.VehicleType])
             {
                 Parking.Vehicles.Add(vehicle);
-            }
-            else
-            {
-                throw new InvalidOperationException();
             }
         }
 
