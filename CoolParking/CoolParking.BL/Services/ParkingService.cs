@@ -40,6 +40,7 @@ namespace CoolParking.BL.Services
             _logTimer = logTimer;
             _withdrawTimer = withdrawTimer;
             this._logTimer.Elapsed += OnLogRecord;
+            this._withdrawTimer.Elapsed += OnWithdrawFunds;
 
         }
 
@@ -221,6 +222,24 @@ namespace CoolParking.BL.Services
             Array.Copy(TransactionInfo, newArray, Math.Min(size, TransactionInfo.Length));
 
             TransactionInfo = newArray;
+        }
+
+        private void StartOrStopTimer(IEnumerable<Vehicle> vehicles)
+        {
+            if (vehicles.Count() == 1)
+            {
+                Parking.StartTime = DateTime.Now;
+                _withdrawTimer.Interval = Settings.paymentWriteOffPeriod * Settings.coefficient;
+                _withdrawTimer.Start();
+                _logTimer.Interval = Settings.loggingPeriod * Settings.coefficient;
+                _logTimer.Start();
+            }
+            else if (vehicles.Count() == 0)
+            {
+                Parking.StartTime = null;
+                _withdrawTimer.Stop();
+                _logTimer.Stop();
+            }
         }
     }
 }
