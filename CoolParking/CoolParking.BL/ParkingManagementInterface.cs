@@ -68,7 +68,22 @@ namespace CoolParking.BL
         //DisplayAllParkingTrCurrentPeriod
         //Вивести на екран усі Транзакції Паркінгу за поточний період (до запису у лог);
 
+        //Забрати Транспортний засіб з Паркінгу;
 
+        private void PickUpVehicle()
+        {
+            Console.WriteLine("\tSpecify the index of the vehicle");
+            ShowListTrFundsLocated();
+            string? id = Console.ReadLine();
+
+            var vehicleses = _parkingService.GetVehicles();
+
+            if (id != null && int.TryParse(id, out int convertId) && convertId > 0 && convertId <= vehicleses.Count)
+            {
+                _parkingService.RemoveVehicle(vehicleses[convertId - 1].Id);
+            }
+
+        }
 
         //Поповнити баланс конкретного Тр. засобу.
         private void TopUpBalanceCar()
