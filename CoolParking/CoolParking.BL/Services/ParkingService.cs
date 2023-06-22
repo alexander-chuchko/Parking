@@ -197,5 +197,15 @@ namespace CoolParking.BL.Services
                 }
             }
         }
+
+        private TransactionInfo CreateTransactionInfo(Vehicle vehicle, decimal sumFine)
+        {
+            return new TransactionInfo
+            {
+                VehicleId = vehicle.Id,
+                TransactionTime = DateTime.Now.ToString("hh:mm:ss"),
+                Sum = sumFine
+            };
+        }
     }
 }
