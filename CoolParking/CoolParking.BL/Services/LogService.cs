@@ -24,7 +24,7 @@ namespace CoolParking.BL.Services
 
         public string Read()
         {
-            string readTransactions = null;
+            string readTransactions = string.Empty;
 
             if (IsExistFile(LogPath))
             {

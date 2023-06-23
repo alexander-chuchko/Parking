@@ -4,19 +4,10 @@
 //       Other validation rules and constructor format went from tests.
 //       Other implementation details are up to you, they just have to match the interface requirements
 //       and tests, for example, in ParkingServiceTests you can find the necessary constructor format and validation rules.
-// TODO: реализовать класс ParkingService из интерфейса IParkingService.
-// При попытке добавить машину на полную парковку должно быть выброшено исключение InvalidOperationException.
-// При попытке удаления автомобиля с отрицательным балансом (долгом) должно быть выброшено InvalidOperationException.
-// Другие правила проверки и формат конструктора пошли из тестов.
-// Другие детали реализации на ваше усмотрение, они просто должны соответствовать требованиям интерфейса
-// и тесты, например, в ParkingServiceTests можно найти нужный формат конструктора и правила проверки.
 
 using CoolParking.BL.Interfaces;
 using CoolParking.BL.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Timers;
 
 namespace CoolParking.BL.Services
@@ -26,11 +17,13 @@ namespace CoolParking.BL.Services
         private readonly ITimerService _withdrawTimer;
         private readonly ITimerService _logTimer;
         private readonly ILogService _logService;
+        private TransactionInfo[] transactionInfo;
+        private Parking parking;
 
         public ParkingService(ITimerService withdrawTimer, ITimerService logTimer, ILogService logService)
         {
-            Parking = Parking.GetInstance();
-            Parking.Vehicles = new List<Vehicle>(Settings.parkingCapacity);
+            parking = Parking.GetInstance();
+            parking.Vehicles = new List<Vehicle>(Settings.parkingCapacity);
             _logService = logService;
             _logTimer = logTimer;
             _withdrawTimer = withdrawTimer;
@@ -39,74 +32,60 @@ namespace CoolParking.BL.Services
 
         }
 
-        private Parking _parking;
-        public Parking Parking
-        {
-            get { return _parking; }
-            set { _parking = value; }
-        }
-
-        private TransactionInfo[] _transactionInfo;
-        public TransactionInfo[] TransactionInfo
-        {
-            get { return _transactionInfo; }
-            set { _transactionInfo = value; }
-        }
-
         #region  ---  Interface IParkingService implementation   ---
 
         //Method for adding vichel to the parking
         public void AddVehicle(Vehicle vehicle)
         {
-            if (Parking.Vehicles.Count == Settings.parkingCapacity)
+            if (parking.Vehicles.Count == Settings.parkingCapacity)
             {
                 throw new InvalidOperationException("There are no spaces in the parking lot");
             }
 
-            if (Parking.Vehicles.Count != 0 && Parking.Vehicles.Exists(v => v.Id == vehicle.Id))
+            if (parking.Vehicles.Count != 0 && parking.Vehicles.Exists(v => v.Id == vehicle.Id))
             {
                 throw new ArgumentException("Invalid identifier entered");
             }
 
             if (vehicle.Balance >= Settings.tariffs[(int)vehicle.VehicleType])
             {
-                Parking.Vehicles.Add(vehicle);
-                StartOrStopTimer(Parking.Vehicles);
+                parking.Vehicles.Add(vehicle);
+                StartOrStopTimer(parking.Vehicles);
             }
         }
 
         public void Dispose()
         {
-            Parking.DisposeInstance();
+            parking.DisposeInstance();
         }
 
         //Method for geting balance of parking
         public decimal GetBalance()
         {
-            return Parking.Balance;
+            return parking.Balance;
         }
 
         //Method for geting capacity of parking
         public int GetCapacity()
         {
-            return Parking.Vehicles.Capacity;
+            return parking.Vehicles.Capacity;
         }
 
         //Method for geting free places of parking
         public int GetFreePlaces()
         {
-            return Parking.Vehicles.Capacity - Parking.Vehicles.Count;
+            return parking.Vehicles.Capacity - parking.Vehicles.Count;
         }
 
         public TransactionInfo[] GetLastParkingTransactions()
         {
-            return TransactionInfo;
+            return transactionInfo;
         }
 
         //Method for geting all vehicles of parking
         public ReadOnlyCollection<Vehicle> GetVehicles()
         {
-            return Parking.Vehicles.AsReadOnly();
+            return parking.Vehicles.AsReadOnly();
         }
 
         public string ReadFromLog()
@@ -117,7 +96,7 @@ namespace CoolParking.BL.Services
         //Pick up car from parking
         public void RemoveVehicle(string vehicleId)
         {
-            var vehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId);
+            var vehicle = parking.Vehicles.Find(tr => tr.Id == vehicleId);
 
             if (vehicle != null)
             {
@@ -127,9 +106,9 @@ namespace CoolParking.BL.Services
                 }
                 else
                 {
-                    Parking.Vehicles.Remove(vehicle);
+                    parking.Vehicles.Remove(vehicle);
 
-                    StartOrStopTimer(Parking.Vehicles);
+                    StartOrStopTimer(parking.Vehicles);
                 }
             }
             else
@@ -141,7 +120,7 @@ namespace CoolParking.BL.Services
         //Method for top up vehicle
         public void TopUpVehicle(string vehicleId, decimal sum)
         {
-            var foundVehicle = Parking.Vehicles.Find(tr => tr.Id == vehicleId);
+            var foundVehicle = parking.Vehicles.Find(tr => tr.Id == vehicleId);
 
             if (foundVehicle != null && sum >= 0)
             {
@@ -159,9 +138,9 @@ namespace CoolParking.BL.Services
         {  
             string transactions = string.Empty;
 
-            if (TransactionInfo != null)
+            if (transactionInfo != null)
             {
-                foreach (var transaction in TransactionInfo)
+                foreach (var transaction in transactionInfo)
                 {
                     if (transaction != null)
                     {
@@ -172,27 +151,27 @@ namespace CoolParking.BL.Services
 
             _logService.Write(transactions);
 
-            TransactionInfo = null;
+            transactionInfo = null;
         }
 
         private void OnWithdrawFunds(object sender, ElapsedEventArgs e)
         {
-            if (Parking.Vehicles.Count != 0)
+            if (parking.Vehicles.Count != 0)
             {
                 int count = 0;
 
                 //When the first object is added
-                if (TransactionInfo == null)
+                if (transactionInfo == null)
                 {
-                    TransactionInfo = new TransactionInfo[Parking.Vehicles.Count];
+                    transactionInfo = new TransactionInfo[parking.Vehicles.Count];
                 }
                 else
                 {
-                    ResizeArray(TransactionInfo.Length + Parking.Vehicles.Count);
-                    count = TransactionInfo.Length - Parking.Vehicles.Count;
+                    ResizeArray(transactionInfo.Length + parking.Vehicles.Count);
+                    count = transactionInfo.Length - parking.Vehicles.Count;
                 }
 
-                foreach (var vehicles in Parking.Vehicles)
+                foreach (var vehicles in parking.Vehicles)
                 {
                     decimal sumFine = 0;
                     decimal tariff = Settings.tariffs[(int)vehicles.VehicleType];
@@ -211,9 +190,9 @@ namespace CoolParking.BL.Services
                     }
 
                     vehicles.Balance -= sumFine;
-                    Parking.Balance += sumFine;
+                    parking.Balance += sumFine;
 
-                    TransactionInfo[count] = CreateTransactionInfo(vehicles, sumFine);
+                    transactionInfo[count] = CreateTransactionInfo(vehicles, sumFine);
 
                     count++;
                 }
@@ -234,16 +213,16 @@ namespace CoolParking.BL.Services
         {
             TransactionInfo[] newArray = new TransactionInfo[size];
 
-            Array.Copy(TransactionInfo, newArray, Math.Min(size, TransactionInfo.Length));
+            Array.Copy(transactionInfo, newArray, Math.Min(size, transactionInfo.Length));
 
-            TransactionInfo = newArray;
+            transactionInfo = newArray;
         }
 
         private void StartOrStopTimer(IEnumerable<Vehicle> vehicles)
         {
             if (vehicles.Count() == 1)
             {
-                Parking.StartTime = DateTime.Now;
+                parking.StartTime = DateTime.Now;
                 _withdrawTimer.Interval = Settings.paymentWriteOffPeriod * Settings.coefficient;
                 _withdrawTimer.Start();
                 _logTimer.Interval = Settings.loggingPeriod * Settings.coefficient;
@@ -251,7 +230,7 @@ namespace CoolParking.BL.Services
             }
             else if (vehicles.Count() == 0)
             {
-                Parking.StartTime = null;
+                parking.StartTime = null;
                 _withdrawTimer.Stop();
                 _logTimer.Stop();
             }

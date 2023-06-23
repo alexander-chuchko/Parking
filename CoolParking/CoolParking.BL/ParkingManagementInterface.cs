@@ -65,7 +65,6 @@ namespace CoolParking.BL
             }
         }
 
-
         //Display the list of Tr. vehicles located in the Parking lot
         private void DisplayListTrFundsLocated()
         {
@@ -85,13 +84,19 @@ namespace CoolParking.BL
             }
         }
 
-
         //Put the Vehicle in Parking
         private void PutTrAidForParking()
         {
-            var vehicle = new Vehicle(Vehicle.GenerateRandomRegistrationPlateNumber(), VehicleType.Truck, 100);
-            _parkingService.AddVehicle(vehicle);
-            Console.WriteLine($"\tAdded to the parking car - Id:{vehicle.Id} VehicleType:{vehicle.VehicleType} Balance:{vehicle.Balance}");
+            try
+            {
+                var vehicle = new Vehicle(Vehicle.GenerateRandomRegistrationPlateNumber(), VehicleType.Truck, 100);
+                _parkingService.AddVehicle(vehicle);
+                Console.WriteLine($"\tAdded to the parking car - Id:{vehicle.Id} VehicleType:{vehicle.VehicleType} Balance:{vehicle.Balance}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"\t{ex.Message}");
+            }
         }
 
         //Pick up the Vehicle from the Parking lot
@@ -99,15 +104,22 @@ namespace CoolParking.BL
         {
             if (_parkingService.GetVehicles().Count > 0)
             {
-                Console.WriteLine("\tSpecify the index of the vehicle");
-                DisplayListTrFundsLocated();
-                string? id = Console.ReadLine();
-
-                var vehicleses = _parkingService.GetVehicles();
-
-                if (id != null && int.TryParse(id, out int convertId) && convertId > 0 && convertId <= vehicleses.Count)
+                try
                 {
-                    _parkingService.RemoveVehicle(vehicleses[convertId - 1].Id);
+                    Console.WriteLine("\tSpecify the index of the vehicle");
+                    DisplayListTrFundsLocated();
+                    string? id = Console.ReadLine();
+
+                    var vehicleses = _parkingService.GetVehicles();
+
+                    if (id != null && int.TryParse(id, out int convertId) && convertId > 0 && convertId <= vehicleses.Count)
+                    {
+                        _parkingService.RemoveVehicle(vehicleses[convertId - 1].Id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"\t{ex.Message}");
                 }
             }
             else
@@ -119,23 +131,30 @@ namespace CoolParking.BL
         //Replenish the balance of a specific financial instrument.
         private void TopUpBalanceCar()
         {
-            if (_parkingService.GetVehicles().Count > 0)
+            try
             {
-                Console.WriteLine("\tSpecify the index of the vehicle");
-                DisplayListTrFundsLocated();
-                string? id = Console.ReadLine();
-                Console.WriteLine("\tEnter replenishment amount");
-                string? topUpAmount = Console.ReadLine();
-                var vehicleses = _parkingService.GetVehicles();
-
-                if (id != null && int.TryParse(id, out int convertIndex) && int.TryParse(topUpAmount, out int convertTopUpAmount) && convertIndex > 0 && convertIndex <= vehicleses.Count)
+                if (_parkingService.GetVehicles().Count > 0)
                 {
-                    _parkingService.TopUpVehicle(vehicleses[convertIndex - 1].Id, convertTopUpAmount);
+                    Console.WriteLine("\tSpecify the index of the vehicle");
+                    DisplayListTrFundsLocated();
+                    string? id = Console.ReadLine();
+                    Console.WriteLine("\tEnter replenishment amount");
+                    string? topUpAmount = Console.ReadLine();
+                    var vehicleses = _parkingService.GetVehicles();
+
+                    if (id != null && int.TryParse(id, out int convertIndex) && int.TryParse(topUpAmount, out int convertTopUpAmount) && convertIndex > 0 && convertIndex <= vehicleses.Count)
+                    {
+                        _parkingService.TopUpVehicle(vehicleses[convertIndex - 1].Id, convertTopUpAmount);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\tThere are no cars in the parking lot");
                 }
             }
-            else
+            catch (Exception ex) 
             {
-                Console.WriteLine("\tThere are no cars in the parking lot");
+                Console.WriteLine($"\t{ex.Message}");
             }
         }
 
